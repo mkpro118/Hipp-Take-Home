@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/mkpro118/MKQuery/MKQuery.js"></script>
+</head>
+<body>
+  <header>
+    <span style="text-align: center;">AI - Powered Recipe Generator</span>
+  </header>
+  <main>
+    <!-- Prompts and instructions are given here -->
+    <section class="prompt-side">
+      <fieldset class="recipe-form">
+        <legend>
+          Prep Your Meal...
+        </legend>
+        <fieldset class="menu">
+          <legend>
+            Your available ingredients are...
+          </legend>
+          <label>
+            <input type="text" id="ingredients" placeholder="Chicken breast, mushrooms, beans..."></input>
+          </label>
+        </fieldset>
+        <fieldset class="menu multi">
+          <legend>
+            Any dietary preferences?
+          </legend>
+          <section class="preferences">
+            <input type="checkbox" id="vegetarian">
+            <label for="vegetarian">
+              Vegetarian
+            </label>
+            <input type="checkbox" id="vegan">
+            <label for="vegan">
+              Vegan
+            </label>
+            <input type="checkbox" id="low-carbs">
+            <label for="low-carbs">
+              Low-Carbs
+            </label>
+            <input type="checkbox" id="gluten-free">
+            <label for="gluten-free">
+              Gluten-Free
+            </label>
+          </section>
+          <label>
+            <input type="text" id="dietary" placeholder="Or describe it yourself...">
+          </label>
+        </fieldset>
+        <fieldset class="menu">
+          <legend>
+            Serving a party of...
+          </legend>
+          <label>
+            <input type="text" id="servings" placeholder="... how many?">
+          </label>
+        </fieldset>
+        <span class="btn go" id="action">
+          <span></span><span></span>
+          <span></span><span></span>
+          Let's Go!
+        </span>
+      </fieldset>
+    </section>
+
+    <!-- Generated results are displayed here -->
+    <section class="result-side">
+
+    </section>
+  </main>
+  <footer>
+    Made with ❤️ by M K
+  </footer>
+  <script src="{{ url_for('static',filename='script.js') }}" defer></script>
+</body>
+</html>
