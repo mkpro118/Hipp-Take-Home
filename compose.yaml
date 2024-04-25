@@ -1,0 +1,18 @@
+services:
+  recipe_generator:
+    container_name: recipe_generator
+    image: recipe_generator
+    build:
+      context: .
+      dockerfile: Dockerfile
+    healthcheck:
+      test: curl --fail http://localhost:5000/healthcheck || exit 1
+      interval: 30s
+      timeout: 15s
+      retries: 3
+      start_period: 5s
+    env_file:
+      - path: .env
+        required: true
+    ports:
+      - "80:5000"

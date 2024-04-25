@@ -1,0 +1,9 @@
+flask
+flask-cors
+python-dotenv
+requests
+types-requests
+types-urllib3
+typing
+typing-extensions
+openai

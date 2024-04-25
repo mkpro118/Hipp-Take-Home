@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, Response
 from flask_cors import CORS
 
 import argparse
@@ -44,6 +44,11 @@ def home():
     return render_template('index.html')
 
 
+@app.route('/healthcheck')
+def healthcheck():
+    return Response(status=204)
+
+
 @app.route('/submit', methods=['POST'])
 def gen_ideas():
     req = request.get_json()
@@ -78,10 +83,7 @@ if __name__ == '__main__':
 
     host = os.environ.get('FLASK_RUN_HOST', '0.0.0.0')
     port = int(os.environ.get('SERVER_PORT', 5000))
-    debug = bool(os.environ.get('FLASK_DEBUG', True))
-
-    ps_host = os.environ.get('PROXYSERVER_HOST', 'localhost')
-    ps_port = os.environ.get('PROXYSERVER_PORT', 8000)
+    debug = bool(os.environ.get('FLASK_DEBUG', False))
 
     parser.add_argument('-fh', '--flask-hostname', type=str, default=host)
     parser.add_argument('-fp', '--flask-port', type=int, default=port)
@@ -94,4 +96,4 @@ if __name__ == '__main__':
     port = args.flask_port
     debug = args.flask_debug
 
-    app.run(host=host, port=port, debug=debug)
+    app.run(host=host, port=port, debug=False)
