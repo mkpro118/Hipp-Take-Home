@@ -8,7 +8,7 @@ A Take Home exercise for Hipp Health
 - If docker is available, it can also be run as a docker container
 
 ## Requirements
-- Needs a .env file to provide OpenAI API Key
+- Needs a .env file to provide OpenAI API Key. The environment variable must be called `OpenAI_API_Key`.
 - If running locally, needs `python`, `flask`, `openai`
 
 ## Setting up a local server
