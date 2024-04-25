@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Recipe Generator</title>
   <link rel="stylesheet" href="{{ url_for('static',filename='styles.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.0.0/showdown.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/mkpro118/MKQuery/MKQuery.js"></script>
 </head>
 <body>
@@ -73,7 +74,12 @@
 
     <!-- Generated results are displayed here -->
     <section class="result-side">
-
+      <section class="recipe">
+        We will generate your recipe here...
+      </section>
+      <span class="retry hidden" id="try_next">
+        Try Another Recipe!
+      </span>
     </section>
   </main>
   <footer>

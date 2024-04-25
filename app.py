@@ -1,12 +1,42 @@
 from flask import Flask, request, render_template
 from flask_cors import CORS
-from typing import Callable, Sequence
 
 import argparse
 import os
+from openai import OpenAI
+import json
 
 app = Flask(__name__)
 CORS(app)
+
+api_key = os.environ.get('OpenAI_API_Key', None)
+
+if api_key is None:
+    raise EnvironmentError('OpenAI_API_Key environment variable is missing')
+
+client = OpenAI(api_key=api_key)
+
+
+def prompts():
+    while True:
+        yield lambda x, y, z: (
+            f'Hello, I am looking for a new recipe to try.'
+            f' I have the following ingredients: {x}.'
+            f' I also have certain dietary preferences: {y}.'
+            f' Can you suggest a recipe that can serve {z}?'
+            f' I\'d appreciate if you could provide step-by-step instructions.'
+        )
+
+        yield lambda x, y, z: (
+            f'Hello, I need your help in creating some recipes.'
+            f' Here are the details: I have these specific ingredients at my disposal: {x}.'
+            f' Furthermore, I have dietary preferences, {y} that need to be considered.'
+            f' And finally, the recipes should be sufficient for {z}.'
+            f'Can you prepare a custom recipe or even provide multiple recipes based on this input?'
+        )
+
+
+prompt_gen = prompts()
 
 
 @app.route('/')
@@ -14,8 +44,33 @@ def home():
     return render_template('index.html')
 
 
-def styles(self):
-    pass
+@app.route('/submit', methods=['POST'])
+def gen_ideas():
+    req = request.get_json()
+    ingredients = req.get('ingredients')
+    preferences = req.get('preferences')
+    servings = req.get('servings')
+    counts = int(req.get('counts') or 1)
+
+    prompt = next(prompt_gen)(ingredients, preferences, servings)
+    recipes = get_recipe(prompt, counts=counts)
+    print(counts)
+    return json.dumps(recipes)
+
+
+def get_recipe(prompt, counts=1, model="gpt-4"):
+    # Calling the ChatCompletion API
+    response = client.chat.completions.create(
+        model=model,
+        messages=[{
+            "role": "user",
+            "content": prompt,
+        }],
+        n=counts,
+    )
+
+    # Returning the extracted response
+    return [choice.message.content for choice in response.choices]
 
 
 if __name__ == '__main__':
